@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hassan Tahir · HH Organization</title>
+  <!-- Google Font & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f6fe;
+      color: #1a2b3f;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ---------- 3D ANIMATED BACKGROUND ---------- */
+    .bg-3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 30% 40%, #d4e7fc 0%, #b0cde8 70%, #9bb9d6 100%);
+      overflow: hidden;
+    }
+
+    /* floating 3D shapes */
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(2px);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      box-shadow: 0 30px 50px -20px rgba(0, 40, 80, 0.3);
+      animation: floatShape 18s infinite alternate ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .shape1 {
+      width: 400px;
+      height: 400px;
+      top: -80px;
+      right: -60px;
+      background: linear-gradient(145deg, rgba(210, 230, 255, 0.6), rgba(150, 190, 230, 0.3));
+      animation-duration: 22s;
+    }
+
+    .shape2 {
+      width: 300px;
+      height: 300px;
+      bottom: -50px;
+      left: -40px;
+      background: linear-gradient(145deg, rgba(180, 215, 250, 0.5), rgba(120, 170, 220, 0.3));
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      animation-duration: 26s;
+      animation-delay: -5s;
+    }
+
+    .shape3 {
+      width: 200px;
+      height: 200px;
+      top: 45%;
+      left: 15%;
+      background: linear-gradient(145deg, rgba(220, 240, 255, 0.5), rgba(160, 200, 240, 0.25));
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation-duration: 19s;
+      animation-delay: -2s;
+    }
+
+    .shape4 {
+      width: 150px;
+      height: 150px;
+      bottom: 20%;
+      right: 10%;
+      background: linear-gradient(145deg, rgba(200, 225, 255, 0.6), rgba(140, 185, 230, 0.2));
+      border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%;
+      animation-duration: 15s;
+      animation-delay: -8s;
+    }
+
+    .shape5 {
+      width: 280px;
+      height: 280px;
+      top: 10%;
+      left: 35%;
+      background: linear-gradient(145deg, rgba(230, 245, 255, 0.35), rgba(170, 210, 245, 0.2));
+      border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+      animation-duration: 30s;
+      animation-delay: -12s;
+      opacity: 0.6;
+    }
+
+    /* moving glow orbs for depth */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      animation: pulseGlow 12s infinite alternate;
+    }
+
+    .orb1 {
+      width: 500px;
+      height: 500px;
+      background: #9ac2f0;
+      top: -150px;
+      left: -100px;
+      animation-duration: 20s;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: #7eb2e6;
+      bottom: -100px;
+      right: -80px;
+      animation-duration: 18s;
+      animation-delay: -6s;
+    }
+
+    .orb3 {
+      width: 300px;
+      height: 300px;
+      background: #b4d6ff;
+      top: 50%;
+      left: 40%;
+      animation-duration: 24s;
+      animation-delay: -10s;
+      opacity: 0.3;
+    }
+
+    @keyframes floatShape {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      50% {
+        transform: translate(30px, -40px) rotate(8deg) scale(1.05);
+      }
+      100% {
+        transform: translate(-20px, 30px) rotate(-5deg) scale(0.98);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0.7;
+        transform: scale(1.15);
+      }
+    }
+
+    /* subtle grid overlay for 3D mesh feel */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      transform: perspective(500px) rotateX(2deg) rotateY(1deg);
+      opacity: 0.4;
+    }
+
+    /* all content above background */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      backdrop-filter: blur(0.5px);
+    }
+
+    /* HEADER / NAV */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0 1.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #0a2a44;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.6);
+    }
+
+    .logo i {
+      color: #1e6f9f;
+      font-size: 1.8rem;
+      filter: drop-shadow(0 4px 6px rgba(0, 40, 80, 0.1));
+    }
+
+    .logo span {
+      color: #1e6f9f;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1f3a52;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #0b5a8c;
+    }
+
+    /* HERO / PROFILE SECTION */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+      margin: 2.5rem 0 3rem 0;
+    }
+
+    .hero-avatar {
+      flex: 0 0 220px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .avatar-image {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      border: 5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 
+        0 30px 40px -12px rgba(10, 50, 90, 0.4),
+        0 0 0 2px rgba(255, 255, 255, 0.8),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #d9e9fa;
+    }
+
+    .avatar-image:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 
+        0 40px 55px -15px rgba(10, 50, 90, 0.5),
+        0 0 0 3px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-content {
+      flex: 1 1 350px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      color: #0a4b73;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 18px -6px rgba(0, 40, 80, 0.15);
+    }
+
+    .hero-content h1 {
+      font-size: 3.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #092338;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 2px 15px rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-content h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #0e5e8f;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 1px 8px rgba(255, 255, 255, 0.6);
+    }
+
+    .hero-content h2 i {
+      font-size: 1.4rem;
+      opacity: 0.9;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #1d3349;
+      margin-bottom: 1.8rem;
+      max-width: 650px;
+      font-weight: 500;
+      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.2rem 0.2rem 0;
+      border-radius: 8px;
+    }
+
+    .hero-description strong {
+      font-weight: 700;
+      color: #092338;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 0 0.2rem;
+      border-radius: 4px;
+    }
+
+    .quick-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e6f9f;
+      font-size: 1.4rem;
+      box-shadow: 0 12px 22px -8px rgba(0, 40, 80, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .stat-text {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #092338;
+      text-shadow: 0 1px 5px rgba(255, 255, 255, 0.7);
+    }
+
+    .stat-text span {
+      display: block;
+      font-weight: 500;
+      font-size: 0.8rem;
+      color: #2d4b66;
+      margin-top: 2px;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+    }
+
+    /* BUSINESS INFO CARDS */
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #092338;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-shadow: 0 2px 12px rgba(255, 255, 255, 0.7);
+    }
+
+    .section-title i {
+      color: #1e6f9f;
+      font-size: 1.8rem;
+      opacity: 0.95;
+      filter: drop-shadow(0 4px 6px rgba(0, 40, 80, 0.1));
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2rem 1.8rem;
+      box-shadow: 
+        0 20px 35px -10px rgba(10, 50, 90, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 
+        0 30px 45px -12px rgba(10, 50, 90, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .card-icon {
+      font-size: 2.3rem;
+      color: #1e6f9f;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 6px 8px rgba(0, 40, 80, 0.1));
+    }
+
+    .info-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0b2a44;
+      margin-bottom: 0.6rem;
+    }
+
+    .info-card p {
+      font-size: 0.95rem;
+      color: #2d4055;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    .highlight-number {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #092338;
+      letter-spacing: -0.02em;
+      margin: 0.5rem 0 0.2rem;
+      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.6);
+    }
+
+    .highlight-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      color: #3e5c78;
+    }
+
+    /* TESTIMONIAL / QUOTE */
+    .quote-box {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 2.2rem 2.5rem;
+      margin: 1rem 0 3rem;
+      border-left: 8px solid #1e6f9f;
+      box-shadow: 
+        0 18px 35px -12px rgba(10, 50, 90, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+
+    .quote-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+      font-style: italic;
+      color: #092338;
+      max-width: 700px;
+      line-height: 1.6;
+      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.6);
+    }
+
+    .quote-text i {
+      color: #1e6f9f;
+      margin-right: 6px;
+      opacity: 0.8;
+    }
+
+    .quote-author {
+      font-weight: 700;
+      color: #0e5e8f;
+      font-size: 1rem;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* CONTACT / FOOTER */
+    .footer {
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 2rem 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: #1d3349;
+      font-weight: 500;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+    }
+
+    .footer-contact span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-contact i {
+      color: #1e6f9f;
+      width: 18px;
+      filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.8));
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .social-links a {
+      color: #2d4b66;
+      font-size: 1.3rem;
+      transition: color 0.2s, transform 0.2s;
+      background: rgba(255, 255, 255, 0.4);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 6px 14px -6px rgba(0, 40, 80, 0.2);
+    }
+
+    .social-links a:hover {
+      color: #0b5a8c;
+      transform: scale(1.08) translateY(-2px);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+      .hero-content h2 {
+        font-size: 1.3rem;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+      }
+      .quote-box {
+        padding: 1.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-avatar {
+        flex: 0 0 170px;
+      }
+      .avatar-image {
+        width: 170px;
+        height: 170px;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .quick-stats {
+        gap: 1rem;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== 3D ANIMATED BACKGROUND ====== -->
+  <div class="bg-3d">
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+    <div class="glow-orb orb3"></div>
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <div class="shape shape4"></div>
+    <div class="shape shape5"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <!-- ====== MAIN CONTENT ====== -->
+  <div class="container">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-cubes"></i>
+        HH <span>ORGANIZATION</span>
+      </div>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Business</a>
+        <a href="#">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-avatar">
+        <!-- YOUR PROFESSIONAL IMAGE (base64 embedded from upload) -->
+        <img 
+          src="HASSAN.jpeg"
+          alt="Hassan Tahir - CEO of HH Organization"
+          class="avatar-image"
+        />
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-bolt" style="margin-right: 6px;"></i> CEO & Founder
+        </div>
+        <h1>Hassan Tahir</h1>
+        <h2>
+          <i class="fas fa-briefcase"></i> HH Organization
+        </h2>
+        <p class="hero-description">
+          <strong>22-year-old entrepreneur</strong> leading a dynamic distribution business. 
+          Focused on scaling logistics, building reliable supply chains, and delivering excellence 
+          across every channel. Driving growth with energy and strategic vision.
+        </p>
+        <div class="quick-stats">
+          <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+            <div class="stat-text">22 <span>Years old</span></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-truck"></i></div>
+            <div class="stat-text">Distribution <span>Industry</span></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-text">CEO <span>Leadership</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSINESS HIGHLIGHTS -->
+    <h2 class="section-title">
+      <i class="fas fa-chart-line"></i> Business at a glance
+    </h2>
+    <div class="cards-grid">
+      <div class="info-card">
+        <div class="card-icon"><i class="fas fa-building"></i></div>
+        <h3>HH Organization</h3>
+        <p>Distribution & Logistics</p>
+        <div class="highlight-number">Est. 2024</div>
+        <div class="highlight-label">Rapid growth</div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon"><i class="fas fa-user-circle"></i></div>
+        <h3>Hassan Tahir</h3>
+        <p>Chief Executive Officer</p>
+        <div class="highlight-number">22</div>
+        <div class="highlight-label">Years of age</div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon"><i class="fas fa-boxes"></i></div>
+        <h3>Core Focus</h3>
+        <p>FMCG & General Trade</p>
+        <div class="highlight-number">B2B</div>
+        <div class="highlight-label">Distribution network</div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon"><i class="fas fa-handshake"></i></div>
+        <h3>Partnerships</h3>
+        <p>Retailers & wholesalers</p>
+        <div class="highlight-number">15+</div>
+        <div class="highlight-label">Active clients</div>
+      </div>
+    </div>
+
+    <!-- QUOTE / MISSION -->
+    <div class="quote-box">
+      <div class="quote-text">
+        <i class="fas fa-quote-left"></i>
+        Our mission is to bridge the gap between manufacturers and retailers with speed, transparency, and unwavering reliability. Age is just a number — execution is everything.
+      </div>
+      <div class="quote-author">— Hassan Tahir, CEO</div>
+    </div>
+
+    <!-- FOOTER / CONTACT -->
+    <footer class="footer">
+      <div class="footer-contact">
+        <span><i class="fas fa-envelope"></i> hassan@hhorganization.com</span>
+        <span><i class="fas fa-phone-alt"></i> +92 300 1234567</span>
+        <span><i class="fas fa-map-marker-alt"></i> Lahore, Pakistan</span>
+      </div>
+      <div class="social-links">
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </footer>
+    <div style="text-align: center; font-size: 0.8rem; color: #3e5c78; padding-top: 0.8rem; text-shadow: 0 1px 4px rgba(255,255,255,0.5);">
+      &copy; 2025 HH Organization · Hassan Tahir
+    </div>
+  </div>
+</body>
+</html>
